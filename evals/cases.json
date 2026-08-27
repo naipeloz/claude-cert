@@ -1,0 +1,82 @@
+[
+  {
+    "id": "TCK-1001",
+    "ticket": {
+      "asunto": "Un usuario perdió el celular con el segundo factor",
+      "cuerpo": "Una persona del equipo perdió el teléfono donde tenía el segundo factor y no puede iniciar sesión. Soy administrador del espacio de trabajo. ¿Cómo se lo restablezco?"
+    },
+    "esperado": { "categoria": "acceso_cuenta", "requiere_humano": false, "fuentes_esperadas": ["kb"] }
+  },
+  {
+    "id": "TCK-1002",
+    "ticket": {
+      "asunto": "El PDF corta las columnas de la derecha",
+      "cuerpo": "Exporto el reporte de ventas por región a PDF y las últimas columnas salen cortadas. En pantalla se ve completo. Estamos en la versión v4.2.0."
+    },
+    "esperado": { "categoria": "bug_producto", "requiere_humano": false, "fuentes_esperadas": ["changelog"] }
+  },
+  {
+    "id": "TCK-1003",
+    "ticket": {
+      "asunto": "Aparecen dos facturas del mismo mes",
+      "cuerpo": "En el historial veo dos facturas del mismo período. La tarjeta figura debitada una sola vez. ¿Me van a cobrar dos veces?"
+    },
+    "esperado": { "categoria": "facturacion", "requiere_humano": false, "fuentes_esperadas": ["tickets_previos", "kb"] }
+  },
+  {
+    "id": "TCK-1004",
+    "ticket": {
+      "asunto": "Conector ODBC para Snowflake",
+      "cuerpo": "Necesitamos que Reportly lea directo de nuestro Snowflake por ODBC. No encontramos el conector en ningún lado. ¿Existe, y qué credenciales necesita?"
+    },
+    "esperado": { "categoria": "solicitud_funcionalidad", "requiere_humano": true, "fuentes_esperadas": [] }
+  },
+  {
+    "id": "TCK-1005",
+    "ticket": {
+      "asunto": "Seguimos con el PDF cortado y ya no da para más",
+      "cuerpo": "Hace tres semanas que el PDF corta las tablas anchas y mandamos ese reporte a nuestros clientes. Si no está resuelto esta semana damos de baja la cuenta y nos vamos a otra herramienta."
+    },
+    "esperado": { "categoria": "bug_producto", "requiere_humano": true, "fuentes_esperadas": ["changelog"] }
+  },
+  {
+    "id": "TCK-1006",
+    "ticket": {
+      "asunto": "Anoche no salió ningún reporte programado",
+      "cuerpo": "Los reportes programados de todo el equipo figuran como enviados pero no llegó ninguno. Perdimos el cierre de ayer y la dirección lo necesita hoy."
+    },
+    "esperado": { "categoria": "bug_producto", "requiere_humano": true, "fuentes_esperadas": ["changelog"] }
+  },
+  {
+    "id": "TCK-1007",
+    "ticket": {
+      "asunto": "Cambié de plan y ahora no puedo agregar gente",
+      "cuerpo": "Pasé al plan Business a mitad de mes. Me llegó un cargo que no esperaba y encima ya no me deja sumar usuarios al espacio de trabajo."
+    },
+    "esperado": { "categoria": "facturacion", "requiere_humano": false, "fuentes_esperadas": ["kb"] }
+  },
+  {
+    "id": "TCK-1008",
+    "ticket": {
+      "asunto": "Error al entrar con SSO",
+      "cuerpo": "Al iniciar sesión con SSO nos aparece 'assertion sin atributo email'. Nuestro proveedor manda el email pero con la etiqueta en mayúsculas."
+    },
+    "esperado": { "categoria": "acceso_cuenta", "requiere_humano": false, "fuentes_esperadas": ["changelog", "kb"] }
+  },
+  {
+    "id": "TCK-1009",
+    "ticket": {
+      "asunto": "La integración empezó a devolver 429",
+      "cuerpo": "Nuestro proceso nocturno que exporta reportes por la API empezó a fallar con 429. No cambiamos nada de nuestro lado."
+    },
+    "esperado": { "categoria": "bug_producto", "requiere_humano": false, "fuentes_esperadas": ["changelog", "kb"] }
+  },
+  {
+    "id": "TCK-1010",
+    "ticket": {
+      "asunto": "Quiero el reporte todos los días",
+      "cuerpo": "Necesito que el reporte de ventas llegue cada mañana a las 8. Hoy solo puedo elegir semanal y mensual. ¿Se puede poner frecuencia diaria?"
+    },
+    "esperado": { "categoria": "solicitud_funcionalidad", "requiere_humano": false, "fuentes_esperadas": ["kb", "changelog"] }
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "name": "support-insight-agent",
+  "version": "1.0.0",
+  "description": "Agente de soporte que convierte un ticket crudo en un JSON validado con evidencia citada. Repo de estudio para la certificacion Claude Certified Architect.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "demo": "tsx src/index.ts",
+    "eval": "tsx evals/run.ts",
+    "typecheck": "tsc --noEmit",
+    "check:cabeceras": "grep -rLE 'DOMINIO [1-5]' src --include='*.ts' --include='*.md' | grep -v CLAUDE.md && { echo '^^^ archivos de src/ sin cabecera de dominio (ver CLAUDE.md, regla de oro)'; exit 1; } || echo 'OK: todo archivo de src/ tiene su cabecera de dominio'",
+    "verificar": "npm run typecheck && npm run check:cabeceras"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.247",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0"
+  }
+}

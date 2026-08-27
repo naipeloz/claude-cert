@@ -1,0 +1,111 @@
+# DOMINIO 2 · Claude Code a nivel equipo (20%) · escenario 5 del examen
+#
+# Claude Code en CI. Tres trabajos, y el orden importa: el chequeo barato y determinista
+# corre primero y bloquea a los otros dos. No tiene sentido gastar una llamada al modelo
+# revisando un PR que ni siquiera cumple la regla que un grep verifica en un segundo.
+#
+# Ver: decisions/D-02-jerarquia-claude-md.md
+
+name: claude-review
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # 1 · Lo determinista primero. Si falta una cabecera de dominio, el PR no pasa.
+  #     Es el mismo comando que corre en local (npm run check:cabeceras): una sola
+  #     definición del chequeo, sin una versión de CI que se desincroniza de la de la
+  #     máquina de nadie.
+  convenciones:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Cabecera de dominio en todo archivo de src/
+        run: npm run check:cabeceras
+
+  # 2 · La revisión de criterio, que es lo que un grep no puede hacer.
+  #     El prompt no dice "revisá el código": le da al modelo las convenciones del repo
+  #     como criterio y le pide que señale dónde no se cumplen. Un prompt genérico
+  #     produce una revisión genérica.
+  revision:
+    needs: convenciones
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          track_progress: true
+          prompt: |
+            Revisá el diff de este PR contra las convenciones del repo, que están en
+            CLAUDE.md (raíz), src/agents/CLAUDE.md y src/mcp/CLAUDE.md. Leé los tres antes
+            de empezar: la jerarquía es real y ningún nivel repite al de arriba.
+
+            Señalá específicamente:
+
+            1. Archivos nuevos en src/ sin cabecera de dominio, o con una cabecera que no
+               nombra la pregunta de examen ni el archivo de decisions/ correspondiente.
+            2. Tools nuevas o modificadas que no cumplan el checklist de src/mcp/CLAUDE.md:
+               descripción sin el "cuándo NO usarla", .describe() sin ejemplo real, caminos
+               de error que no digan el próximo paso, o cero resultados tratado como error.
+            3. Subagentes nuevos. El tope es dos. Si el PR agrega uno, pedí que se
+               justifique por contexto o por rol, y que se diga cuál de los dos actuales
+               se absorbe.
+            4. Números mágicos en el orquestador que deberían estar en UMBRALES
+               (src/context/policy.ts).
+            5. Pasos nuevos del orquestador que no registran en la traza.
+            6. Archivos de más de 250 líneas.
+
+            Comentá solo lo que incumple una convención concreta, citándola. No opines
+            sobre estilo ni propongas refactors que las convenciones no piden: este repo
+            vale por poder leerse entero, y una revisión que sugiere abstracciones va en
+            contra de eso.
+          claude_args: |
+            --max-turns 15
+            --allowedTools Read,Grep,Glob
+
+  # 3 · Casos de eval para lo que el PR cambió. No tests unitarios: este repo no tiene
+  #     framework de tests a propósito, el eval ES el test. Lo que se le pide al modelo
+  #     es que proponga los casos que faltan, no que invente una suite.
+  casos-de-eval:
+    needs: convenciones
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          track_progress: true
+          prompt: |
+            Mirá qué cambió en este PR y proponé los casos de eval que faltan para cubrirlo.
+
+            Leé primero evals/README.md y evals/cases.json para respetar el formato y no
+            duplicar un caso existente. Cada caso propuesto va como un objeto JSON completo,
+            con su {id, ticket, esperado}, listo para pegar.
+
+            Priorizá los casos de ESCALADO por sobre los de clasificación: acertar la
+            categoría es fácil y ya está cubierto; lo que hay que probar es cuándo el
+            agente tiene que rendirse. Si el PR toca src/context/policy.ts o
+            src/mcp/server.ts, proponé al menos un caso donde la regla nueva dispare y uno
+            donde deliberadamente no dispare.
+
+            Si el PR no necesita casos nuevos, decilo en una línea y no propongas ninguno.
+          claude_args: |
+            --max-turns 15
+            --allowedTools Read,Grep,Glob
