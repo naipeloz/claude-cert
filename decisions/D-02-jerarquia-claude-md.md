@@ -3,6 +3,10 @@
 **Dominio:** Claude Code a nivel equipo (20%)
 **Archivos:** `CLAUDE.md`, `src/agents/CLAUDE.md`, `src/mcp/CLAUDE.md`
 
+> Decisión real de este repo, escrita con formato de opción múltiple para poder practicar
+> con ella. **No es una pregunta del examen**: el escenario y las cuatro opciones están
+> inventados acá. Ver [`decisions/README.md`](README.md).
+
 ## El escenario
 
 Cinco personas trabajan sobre el mismo repo con Claude Code. El `CLAUDE.md` de la raíz

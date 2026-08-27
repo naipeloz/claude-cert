@@ -3,6 +3,10 @@
 **Dominio:** Contexto y confiabilidad (15%)
 **Archivos:** `src/context/policy.ts`
 
+> Decisión real de este repo, escrita con formato de opción múltiple para poder practicar
+> con ella. **No es una pregunta del examen**: el escenario y las cuatro opciones están
+> inventados acá. Ver [`decisions/README.md`](README.md).
+
 ## El escenario
 
 Los tickets largos —los que tienen ida y vuelta con el cliente y varias rondas de

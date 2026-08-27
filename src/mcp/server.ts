@@ -1,7 +1,7 @@
 /**
  * DOMINIO 4 · Herramientas y MCP (18%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Cómo diseñás una tool para que el modelo la use bien y se recupere cuando falla?»
  *
  * Tres tools sobre tres fuentes. Dos criterios que se leen en cada una: la descripción

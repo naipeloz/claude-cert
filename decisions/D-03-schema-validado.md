@@ -3,6 +3,10 @@
 **Dominio:** Prompts y salida estructurada (20%)
 **Archivos:** `src/schemas/ticketInsight.ts`, `src/prompts/compose.md`
 
+> Decisión real de este repo, escrita con formato de opción múltiple para poder practicar
+> con ella. **No es una pregunta del examen**: el escenario y las cuatro opciones están
+> inventados acá. Ver [`decisions/README.md`](README.md).
+
 ## El escenario
 
 La salida del agente alimenta un dashboard de soporte: categoría, severidad, respuesta

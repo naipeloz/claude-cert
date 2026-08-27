@@ -1,9 +1,15 @@
 # support-insight-agent
 
 Agente de soporte que convierte un ticket crudo en un JSON validado con evidencia citada.
-Es a la vez un producto que funciona y el material de estudio de una charla sobre la
-certificación Claude Certified Architect: cada archivo de `src/` responde una pregunta de
-examen y cada decisión de diseño tiene su alternativa escrita en `decisions/`.
+Es a la vez un producto que funciona y el material de acompañamiento de una charla sobre la
+certificación Claude Certified Architect: cada archivo de `src/` ejercita una pregunta de
+diseño de uno de los cinco dominios del temario, y cada decisión tiene su alternativa
+escrita en `decisions/`.
+
+**Nada de este repo reproduce, parafrasea ni anticipa preguntas del examen.** Son ejemplos
+originales alineados a los dominios; del temario público salen los nombres de los dominios
+y sus pesos, y nada más. Si escribís documentación nueva acá, mantené esa distinción
+explícita: se dice "pregunta de diseño", no "pregunta de examen".
 
 ## Cómo se corre
 
@@ -30,8 +36,8 @@ modelo. El formato es:
 /**
  * DOMINIO N · <Nombre del dominio> (<peso>%)
  *
- * Pregunta de examen que responde este archivo:
- *   «<la pregunta de diseño del dominio>»
+ * Pregunta de diseño que ejercita este archivo:
+ *   «<la pregunta de diseño que ese dominio cubre>»
  *
  * <2-4 líneas sobre el criterio aplicado acá>
  *
@@ -68,6 +74,6 @@ de más, no en cuántos pedazos partirlo.
 
 ## Dónde está cada cosa
 
-`README.md` está organizado por dominio del examen y es el índice real del repo.
+`README.md` está organizado por dominio del temario y es el índice real del repo.
 `decisions/` es el banco de práctica: ocho decisiones con cuatro opciones plausibles cada
 una. `antipatterns/` tiene las versiones malas a propósito, para leer al lado de las buenas.

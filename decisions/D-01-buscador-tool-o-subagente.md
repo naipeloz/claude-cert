@@ -3,6 +3,10 @@
 **Dominio:** Diseño de agentes (27%)
 **Archivos:** `src/agents/subagents.ts`, `src/agents/orchestrator.ts`
 
+> Decisión real de este repo, escrita con formato de opción múltiple para poder practicar
+> con ella. **No es una pregunta del examen**: el escenario y las cuatro opciones están
+> inventados acá. Ver [`decisions/README.md`](README.md).
+
 ## El escenario
 
 Tu agente de soporte tiene que consultar tres fuentes antes de responder: la base de

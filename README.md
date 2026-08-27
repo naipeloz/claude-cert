@@ -3,14 +3,34 @@
 Entra un ticket de soporte crudo. Sale un JSON estructurado, validado, con evidencia citada,
 listo para un dashboard.
 
-Es un producto que funciona y, al mismo tiempo, el material de estudio de la charla **"Cómo
-es la certificación Claude Certified Architect"**. Cada archivo de `src/` responde una
-pregunta de examen y cada decisión de diseño tiene sus tres alternativas escritas en
-[`decisions/`](decisions/).
+Es un producto que funciona y, al mismo tiempo, el material de acompañamiento de la charla
+**"Cómo es la certificación Claude Certified Architect"**. Cada archivo de `src/` ejercita
+una pregunta de diseño de uno de los cinco dominios, y cada decisión tiene sus tres
+alternativas escritas en [`decisions/`](decisions/).
 
 El criterio de éxito de este repo no es que funcione: es que alguien que lo clone entienda
-**por qué cada decisión se tomó así y no de las otras tres formas plausibles**. Esa es la
-forma del examen, así que es la forma del repo.
+**por qué cada decisión se tomó así y no de las otras tres formas plausibles**.
+
+> ### Qué es y qué no es este material
+>
+> Todo lo que hay acá son **ejemplos originales alineados a los cinco dominios** que la
+> certificación publica en su temario. **No reproduce, no parafrasea y no anticipa preguntas
+> del examen.** Nadie que escribió esto vio el examen.
+>
+> En concreto:
+>
+> - **Las cabeceras de los archivos** no son preguntas de examen. Son las preguntas de diseño
+>   que este repo se hizo a sí mismo mientras se construía, agrupadas por el dominio al que
+>   pertenecen.
+> - **Las ocho decisiones de [`decisions/`](decisions/)** son decisiones reales de este
+>   código, reescritas con formato de pregunta para poder usarlas como autoevaluación. Los
+>   escenarios y las cuatro opciones están inventados para este repo.
+> - **Los pesos porcentuales y los nombres de los dominios** salen del temario público. Nada
+>   más de acá sale de material de la certificación.
+>
+> Que el registro se parezca al de una pregunta de examen es deliberado —sirve para
+> practicar el tipo de razonamiento que la certificación evalúa— pero **no hay ninguna
+> correspondencia con ítems reales, y haber leído esto no es haber visto el examen.**
 
 ## Cómo correrlo
 
@@ -41,12 +61,12 @@ clasificar ──▶ investigar ──▶ compactar ──▶ redactar + estruct
  sin subagente  fan-out         policy.ts       solo evidencia           policy.ts
 ```
 
-## Los seis escenarios del examen, y dónde están cubiertos
+## Los seis escenarios del temario, y dónde están cubiertos
 
 La idea que organiza todo el repo son **dos capas**: el producto cubre unos escenarios, y la
 configuración del repo *en sí misma* cubre los otros dos.
 
-| Escenario | Lo cubre | Dónde |
+| Escenario del temario | Lo cubre | Dónde |
 |---|---|---|
 | 1 · Agente de resolución de soporte | el producto | [`src/agents/`](src/agents/) |
 | 2 · Claude Code a nivel equipo | **la configuración del repo** | [`CLAUDE.md`](CLAUDE.md) ×3, [`.claude/skills/nueva-tool/`](.claude/skills/nueva-tool/SKILL.md) |
@@ -61,6 +81,9 @@ proyecto: son **cómo el proyecto está hecho**.
 ---
 
 # Los cinco dominios
+
+Una sección por dominio del temario. Cada una abre con la pregunta de diseño que ese
+dominio cubre —redactada acá, no tomada del examen— y nombra los archivos que la trabajan.
 
 ## Dominio 1 · Diseño de agentes (27%)
 
@@ -168,9 +191,10 @@ sistema decide que ese ticket lo tiene que ver una persona.
 
 ## Estudiar con esto después
 
-[`decisions/`](decisions/) es un banco de práctica de ocho preguntas con el formato del
-examen. Tapá la sección "Elegida", respondé, y comparate. Lo que importa no es acertar la
-letra: es que tu razón coincida con la razón.
+[`decisions/`](decisions/) es un banco de práctica de ocho preguntas sobre decisiones de
+diseño de este repo, escritas con formato de opción múltiple. Tapá la sección "Elegida",
+respondé, y comparate. Lo que importa no es acertar la letra: es que tu razón coincida con
+la razón. **No son preguntas de examen** — ver el recuadro del principio.
 
 [`antipatterns/`](antipatterns/) son tres archivos escritos mal a propósito. Ninguno está
 roto: los tres pasarían una revisión de código. Abrilos al lado del archivo bueno y buscá la

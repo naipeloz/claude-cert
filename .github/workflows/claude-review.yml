@@ -1,4 +1,4 @@
-# DOMINIO 2 · Claude Code a nivel equipo (20%) · escenario 5 del examen
+# DOMINIO 2 · Claude Code a nivel equipo (20%) · escenario 5 del temario
 #
 # Claude Code en CI. Tres trabajos, y el orden importa: el chequeo barato y determinista
 # corre primero y bloquea a los otros dos. No tiene sentido gastar una llamada al modelo
@@ -58,7 +58,7 @@ jobs:
             Señalá específicamente:
 
             1. Archivos nuevos en src/ sin cabecera de dominio, o con una cabecera que no
-               nombra la pregunta de examen ni el archivo de decisions/ correspondiente.
+               nombra la pregunta de diseño ni el archivo de decisions/ correspondiente.
             2. Tools nuevas o modificadas que no cumplan el checklist de src/mcp/CLAUDE.md:
                descripción sin el "cuándo NO usarla", .describe() sin ejemplo real, caminos
                de error que no digan el próximo paso, o cero resultados tratado como error.
@@ -69,6 +69,10 @@ jobs:
                (src/context/policy.ts).
             5. Pasos nuevos del orquestador que no registran en la traza.
             6. Archivos de más de 250 líneas.
+
+            7. Documentación nueva que hable de "preguntas de examen" en vez de "preguntas
+               de diseño". Este repo son ejemplos alineados a los dominios del temario y no
+               reproduce contenido del examen; la redacción tiene que sostener eso.
 
             Comentá solo lo que incumple una convención concreta, citándola. No opines
             sobre estilo ni propongas refactors que las convenciones no piden: este repo

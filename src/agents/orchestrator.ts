@@ -1,7 +1,7 @@
 /**
  * DOMINIO 1 · Diseño de agentes (27%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Quién decide el orden de los pasos: el modelo o el código?»
  *
  * Acá lo decide el código. Cinco pasos fijos, uno por llamada, con una traza que se

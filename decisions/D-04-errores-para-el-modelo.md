@@ -3,6 +3,10 @@
 **Dominio:** Herramientas y MCP (18%)
 **Archivos:** `src/mcp/server.ts`, `src/schemas/ticketInsight.ts`
 
+> Decisión real de este repo, escrita con formato de opción múltiple para poder practicar
+> con ella. **No es una pregunta del examen**: el escenario y las cuatro opciones están
+> inventados acá. Ver [`decisions/README.md`](README.md).
+
 ## El escenario
 
 Tus tools están instrumentadas como corresponde: validan los parámetros, devuelven códigos

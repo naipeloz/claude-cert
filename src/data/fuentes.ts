@@ -1,7 +1,7 @@
 /**
  * DOMINIO 4 · Herramientas y MCP (18%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Qué le das de comer a las tools, y de dónde sale?»
  *
  * Tres arrays. Sin base de datos, sin ORM, sin capa de repositorio: reemplazar esto por

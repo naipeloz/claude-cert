@@ -1,7 +1,7 @@
 <!--
 DOMINIO 3 · Prompts y salida estructurada (20%)
 
-Pregunta de examen que responde este archivo:
+Pregunta de diseño que ejercita este archivo:
   «¿Cuándo un prompt se escribe con ejemplos y cuándo con instrucciones?»
 
 Este prompt va con FEW-SHOT porque la tarea tiene FORMA, no reglas: "cuál de estas cinco

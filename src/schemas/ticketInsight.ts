@@ -1,7 +1,7 @@
 /**
  * DOMINIO 3 · Prompts y salida estructurada (20%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Cómo garantizás que la salida del modelo sea utilizable por el sistema que la consume?»
  *
  * El contrato. Todo lo demás depende de este archivo. Dos criterios que se leen acá:

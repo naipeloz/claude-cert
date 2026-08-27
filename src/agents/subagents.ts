@@ -1,7 +1,7 @@
 /**
  * DOMINIO 1 · Diseño de agentes (27%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Cuándo algo merece ser un subagente y cuándo alcanza con una tool?»
  *
  * Exactamente dos subagentes. Ni uno más. Cada subagente extra cuesta latencia, tokens y

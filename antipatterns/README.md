@@ -18,8 +18,9 @@ criterio de arquitectura de agentes no se ven como bugs. Se ven como decisiones 
 que escalan mal, y el costo aparece meses después — cuando el equipo crece, cuando el
 contexto se llena, cuando el modelo empieza a no recuperarse de fallos que antes no pasaban.
 
-Por eso el examen pregunta por criterio y no por sintaxis, y por eso estos tres archivos
-valen más que una lista de buenas prácticas.
+Por eso los cinco dominios de la certificación están escritos alrededor de criterio y no de
+sintaxis, y por eso estos tres archivos valen más que una lista de buenas prácticas. (Los
+tres son inventados para este repo: no son código real de nadie ni material del examen.)
 
 ## Cómo usarlos
 

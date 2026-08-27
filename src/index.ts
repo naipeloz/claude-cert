@@ -1,7 +1,7 @@
 /**
  * DOMINIO 1 · Diseño de agentes (27%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Qué le mostrás a un operador para que pueda confiar en lo que hizo el agente?»
  *
  * La traza primero, el JSON después. Un agente que solo imprime el resultado obliga a

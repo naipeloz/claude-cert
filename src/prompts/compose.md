@@ -1,7 +1,7 @@
 <!--
 DOMINIO 3 · Prompts y salida estructurada (20%)
 
-Pregunta de examen que responde este archivo:
+Pregunta de diseño que ejercita este archivo:
   «¿Cómo hacés que el modelo devuelva algo que otro sistema pueda consumir sin parchear?»
 
 Este prompt va con INSTRUCCIONES y no con few-shot porque la tarea tiene REGLAS, no forma:

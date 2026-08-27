@@ -1,7 +1,7 @@
 /**
  * DOMINIO 5 · Contexto y confiabilidad (15%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Cómo sabés que el agente sigue funcionando después de tocarle el prompt?»
  *
  * Cuatro métricas, y la que importa es la de escalado. Acertar la categoría es fácil y

@@ -1,8 +1,18 @@
 # decisions · el banco de práctica
 
-Ocho decisiones de diseño de este repo, escritas con la forma de una pregunta de examen:
-un escenario de producción, cuatro opciones plausibles, la elegida, por qué fallan las
-otras tres, y la trampa que hace elegir mal.
+Ocho decisiones de diseño **de este repo**, reescritas con formato de opción múltiple: un
+escenario de producción, cuatro opciones plausibles, la elegida, por qué fallan las otras
+tres, y la trampa que hace elegir mal.
+
+> **No son preguntas del examen.** Ni tomadas, ni parafraseadas, ni reconstruidas de
+> memoria. Son decisiones que se tomaron construyendo este código, escritas después con
+> formato de pregunta para poder usarlas como autoevaluación. Los escenarios, las cuatro
+> opciones y las trampas están inventados acá. Lo único que sale del temario público de la
+> certificación son los nombres de los dominios y sus pesos porcentuales.
+>
+> El formato imita el registro de una pregunta de certificación **a propósito**, porque
+> practicar el razonamiento en ese formato ayuda. Pero acertar las ocho de acá no dice nada
+> sobre qué va a preguntar el examen.
 
 ## Cómo usarlo para estudiar
 
@@ -10,15 +20,16 @@ otras tres, y la trampa que hace elegir mal.
 elegí una y escribí en una línea por qué. Recién ahí destapá y comparate.
 
 Lo que importa no es acertar la letra: es que tu razón coincida con la razón. Se puede
-acertar por el motivo equivocado, y en el examen ese acierto no se repite cuando el
-escenario cambia un poco. Si tu razón fue "porque es más limpio" o "es la buena práctica",
-esa respuesta no va a sobrevivir a la siguiente pregunta.
+acertar por el motivo equivocado, y ese acierto no se repite cuando el escenario cambia un
+poco — que es exactamente lo que va a pasar en cualquier pregunta que no sea esta. Si tu
+razón fue "porque es más limpio" o "es la buena práctica", esa respuesta no va a sobrevivir
+al próximo escenario.
 
 **Las cuatro opciones son plausibles a propósito.** Ninguna es de relleno: las cuatro son
 cosas que alguien construyó en producción y defendió en una revisión de diseño. Si te
 parece que una es obviamente absurda, volvé a leerla — probablemente sea la que elegirías
-en un sistema con restricciones apenas distintas, y ese "apenas distintas" es la materia
-del examen.
+en un sistema con restricciones apenas distintas, y ese "apenas distintas" es donde está
+todo el criterio que vale la pena practicar.
 
 ## Las ocho
 

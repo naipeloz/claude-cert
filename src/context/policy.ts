@@ -1,7 +1,7 @@
 /**
  * DOMINIO 5 · Contexto y confiabilidad (15%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «Cuando el contexto no alcanza y las cosas fallan, ¿qué se tira y cuándo se rinde el agente?»
  *
  * Toda la política del sistema en un archivo, para que se pueda auditar de un vistazo.

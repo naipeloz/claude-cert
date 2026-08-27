@@ -1,7 +1,7 @@
 /**
  * DOMINIO 2 · Claude Code a nivel equipo (20%)
  *
- * Pregunta de examen que responde este archivo:
+ * Pregunta de diseño que ejercita este archivo:
  *   «¿Dónde vive la configuración que cambia entre entornos y personas?»
  *
  * Un solo lugar con nombres de modelo en todo el repo. Los nombres de modelo caducan
