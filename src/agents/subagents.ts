@@ -21,7 +21,10 @@ import { TOOLS_SOPORTE } from '../mcp/server.ts';
  * Existe POR EL CONTEXTO.
  *
  * Hace fan-out sobre tres fuentes y puede leer diez documentos para quedarse con cuatro
- * citas. Si esto viviera en el hilo principal, el orquestador llegaría al paso de redactar
+ * citas. El prompt le pide las tres consultas en un mismo turno; medido, el modelo las
+ * hace de a una igual — la traza lo imprime en cada corrida y D-08 cuenta qué se probó.
+ * Eso no cambia el motivo por el que este subagente existe, que es el contexto y no la
+ * latencia. Si esto viviera en el hilo principal, el orquestador llegaría al paso de redactar
  * con la ventana llena de material descartado — artículos que no aplicaban, entradas de
  * changelog de otra versión, tickets parecidos que no eran. El subagente existe para que
  * ese material muera con él y al hilo principal vuelvan solo las citas.
@@ -42,9 +45,9 @@ funciona el producto, el changelog dice qué se rompió y qué se arregló, y lo
 dicen cómo se resolvió antes. Ninguna reemplaza a las otras.
 
 Empezá SIEMPRE llamando a las tres en el mismo turno, en paralelo, con una consulta pensada
-para cada una. No las llames de a una esperando el resultado de la anterior: no dependen entre
-sí y hacerlo secuencial solo agrega latencia. Después de ese primer turno, si algo quedó
-abierto, hacé como mucho una segunda ronda de consultas.
+para cada una, escritas con el texto del ticket y nada más. No las llames de a una esperando
+el resultado de la anterior: no dependen entre sí y hacerlo secuencial solo agrega latencia.
+Después de ese primer turno, si algo quedó abierto, hacé como mucho una segunda ronda.
 
 Si una tool devuelve un error, leelo: te dice qué corregir. Corregí y volvé a llamar una vez.
 Si vuelve a fallar, seguí sin esa fuente y anotalo en \`fuentes_caidas\`.

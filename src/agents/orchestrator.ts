@@ -38,16 +38,16 @@ import {
 } from '../schemas/ticketInsight.ts';
 
 const DIR = dirname(fileURLToPath(import.meta.url));
-
 export type Ticket = { id: string; asunto: string; cuerpo: string };
 export type PasoTraza = { paso: string; detalle: string };
 export type Resultado = { insight: TicketInsight; traza: PasoTraza[]; fallosDeSchema: number; regla: string };
 
+
 /** Carga un prompt, le saca la cabecera de dominio y sustituye los {{PLACEHOLDERS}}. */
 function cargarPrompt(nombre: string, vars: Record<string, string>): string {
+  // La cabecera de dominio va en comentario HTML justamente para poder sacarla acá: la
+  // regla del repo no tiene excepciones, y el modelo no tiene por qué leerla.
   const crudo = readFileSync(join(DIR, '..', 'prompts', `${nombre}.md`), 'utf8');
-  // La cabecera de dominio va en un comentario HTML justamente para poder sacarla acá:
-  // la regla del repo no tiene excepciones, y el modelo no tiene por qué leerla.
   const sinCabecera = crudo.replace(/^<!--[\s\S]*?-->\s*/, '');
   return Object.entries(vars).reduce((t, [k, v]) => t.replaceAll(`{{${k}}}`, v), sinCabecera);
 }
@@ -55,13 +55,10 @@ function cargarPrompt(nombre: string, vars: Record<string, string>): string {
 /** Base común de toda llamada. Ver el comentario de settingSources, que es el que importa. */
 const BASE: Options = {
   /**
-   * settingSources: [] es obligatorio y es el error más fácil de cometer.
-   *
-   * Este repo tiene tres CLAUDE.md, pero son instrucciones para Claude Code cuando alguien
-   * programa acá, no para el agente de soporte. Sin esta línea el agente los cargaría y
-   * estaría leyendo el checklist de cómo agregar una tool mientras le responde a un cliente
-   * que no puede exportar un PDF. La configuración del entorno de desarrollo no es contexto
-   * del producto.
+   * settingSources: [] es obligatorio y es el error más fácil de cometer. Este repo tiene
+   * tres CLAUDE.md, pero son instrucciones para Claude Code cuando alguien programa acá.
+   * Sin esta línea el agente de soporte los cargaría, y estaría leyendo el checklist de
+   * cómo agregar una tool mientras le responde a un cliente que no puede exportar un PDF.
    */
   settingSources: [],
   /** Sin Read, Bash ni Write: este agente lee tres arrays, no un disco. */
@@ -74,10 +71,15 @@ async function correr(prompt: string, opciones: Options) {
   const materialBruto: string[] = [];
   let toolsCaidas = 0;
   let texto = '';
+  // Turnos en los que el modelo emitió al menos una llamada a tool. Comparado contra la
+  // cantidad de llamadas, dice si el fan-out salió paralelo o secuencial — ver D-08.
+  let turnosDeTools = 0;
 
   const flujo = query({ prompt, options: { ...BASE, ...opciones } }) as AsyncIterable<SDKMessage>;
   for await (const m of flujo) {
-    if (m.type === 'user' && typeof m.message === 'object' && Array.isArray(m.message.content)) {
+    if (m.type === 'assistant' && Array.isArray(m.message.content)) {
+      if (m.message.content.some((b) => (b as { type?: string }).type === 'tool_use')) turnosDeTools++;
+    }    if (m.type === 'user' && typeof m.message === 'object' && Array.isArray(m.message.content)) {
       // Todo lo que devolvieron las tools, literal. Esto es lo que después se descarta.
       for (const b of m.message.content as Array<{ type?: string; content?: unknown; is_error?: boolean }>) {
         if (b?.type !== 'tool_result') continue;
@@ -94,7 +96,7 @@ async function correr(prompt: string, opciones: Options) {
       texto = m.result;
     }
   }
-  return { texto, materialBruto, toolsCaidas };
+  return { texto, materialBruto, toolsCaidas, turnosDeTools };
 }
 
 /**
@@ -124,7 +126,6 @@ async function clasificar(t: Ticket) {
 }
 
 type Hallazgo = Evidencia & { por_que?: string };
-
 /**
  * Si la investigación falla del todo, el ticket NO se cae: vuelve vacía y con una fuente
  * marcada como caída, que es lo que hace disparar la regla "fuentes-incompletas".
@@ -144,7 +145,7 @@ async function investigar(t: Ticket) {
       });
       const b = extraerJson(c.texto) as { hallazgos?: Hallazgo[]; notas?: string };
       const hallazgos = (b.hallazgos ?? []).filter((h) => h?.id && h?.cita);
-      return { hallazgos, notas: b.notas ?? '', materialBruto: c.materialBruto, toolsCaidas: c.toolsCaidas };
+      return { hallazgos, notas: b.notas ?? '', materialBruto: c.materialBruto, toolsCaidas: c.toolsCaidas, turnosDeTools: c.turnosDeTools };
     },
     UMBRALES.maxReintentos,
     'investigar',
@@ -153,13 +154,13 @@ async function investigar(t: Ticket) {
     notas: `La investigación no se pudo completar: ${e instanceof Error ? e.message : String(e)}`,
     materialBruto: [] as string[],
     toolsCaidas: 1,
+    turnosDeTools: 0,
   }));
 }
 
 export async function procesarTicket(t: Ticket): Promise<Resultado> {
   const traza: PasoTraza[] = [];
   const anotar = (paso: string, detalle: string) => traza.push({ paso, detalle });
-
   // 1 · Clasificar
   const clase = await clasificar(t);
   const cancela = clase.mencionaCancelar ? ' · menciona cancelar' : '';
@@ -172,7 +173,12 @@ export async function procesarTicket(t: Ticket): Promise<Resultado> {
     evidencia: inv.hallazgos.map(({ fuente, id, cita }) => ({ fuente, id, cita: cita.slice(0, 400) })),
   };
   const caidas = inv.toolsCaidas > 0 ? ` · ${inv.toolsCaidas} fallo(s) de tool` : '';
-  anotar('investigado', `${inv.materialBruto.length} llamadas a tools → ${estado.evidencia.length} citas${caidas}`);
+  // La forma del fan-out se imprime en cada corrida a propósito: D-08 afirma algo sobre el
+  // paralelismo y una afirmación sobre el comportamiento del modelo que no se mide es una
+  // suposición. Acá se ve, corrida por corrida, si se cumplió.
+  const vueltas = inv.turnosDeTools;
+  const forma = vueltas <= 1 ? 'paralelo' : vueltas >= inv.materialBruto.length ? 'secuencial' : 'parcial';
+  anotar('investigado', `${inv.materialBruto.length} llamadas en ${vueltas} turno(s) → ${forma} → ${estado.evidencia.length} citas${caidas}`);
 
   // 3 · Compactar: se descarta el material bruto entero, se conservan las citas
   const comp = compactar(estado);
@@ -193,13 +199,9 @@ export async function procesarTicket(t: Ticket): Promise<Resultado> {
   let insight: TicketInsight | null = null;
   let fallosDeSchema = 0;
   let correccion = '';
-
   while (insight === null && fallosDeSchema <= UMBRALES.maxFallosDeSchema) {
-    const { texto } = await correr(promptBase + correccion, {
-      agent: 'redactor',
-      agents: { redactor: REDACTOR },
-      model: MODELO,
-    });
+    const opciones = { agent: 'redactor', agents: { redactor: REDACTOR }, model: MODELO };
+    const { texto } = await correr(promptBase + correccion, opciones);
     let v: ReturnType<typeof validar>;
     try {
       v = validar(extraerJson(texto));
